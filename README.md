@@ -11,7 +11,7 @@ Install the Nolan Fieldtype and you'll see 'Nolan' as an available celltype when
 
 Two required configuration fields are Column Labels and Column Names.
 
-Labels are what your publishers see, and labels are what you reference in templates.
+'Column Labels' are what your publishers see, and 'Column Names' are what you reference in templates.
 
 For example, I maybe have a Nolan cell with a short name of 'players', and I want it to contain first and last names of team players along with their position in the game.
 
