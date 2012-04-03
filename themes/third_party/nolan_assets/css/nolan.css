@@ -1,5 +1,5 @@
-.nolan_table td.nolan_drag_handle {background-image: url(../gfx/drag.png); background-repeat: no-repeat; background-position: 50% 50%; padding: 5px 15px;}
-.nolan_table .ui-sortable-helper {display: block; -webkit-box-shadow:  2px 2px 3px rgba(0,0,0,0.4); -moz-box-shadow:  0 0 5px rgba(0,0,0,0.4); box-shadow:  0 0 5px rgba(0,0,0,0.4); border-top: 1px solid #fff; opacity: 0.8;}
+.nolan_table td.nolan_drag_handle {background-image: url(../gfx/drag_handle.png); background-repeat: no-repeat; background-position: 50% 50%; padding: 5px 12px; background-color: #E2E2E2; background-color: rgba(0, 0, 0, 0.06); border-right: 1px solid #E3E3E3;}
+.nolan_table .ui-sortable-helper {display: block; -webkit-box-shadow:  2px 2px 3px rgba(0,0,0,0.4); -moz-box-shadow: 0 0 5px rgba(0,0,0,0.4); box-shadow:  0 0 5px rgba(0,0,0,0.4); border-top: 1px solid #fff; opacity: 0.85;}
 .nolan_table td.nolan_drag_handle:hover {cursor: move; cursor: -webkit-grab;}
 .nolan_table a.add_row,
 .nolan_table a.remove_row {display: block; width: 16px; height: 16px; text-indent: 100%;white-space: nowrap;overflow: hidden; display: inline-block; }
@@ -10,9 +10,11 @@
 .nolan_table {width: 100%;}
 .nolan_table input,
 .nolan_table input:focus {border: none; padding: 6px 3px; margin: 0; width: auto; font-size: 11px; font-family: 'Lucida Grande', sans-serif; background: #fff;}
-.nolan_table tr td {border-bottom: 1px solid #E3E3E3; padding: 2px;}
+.nolan_table tr td {border-bottom: 1px solid #E3E3E3; padding: 2px; background: #fff}
 .nolan_table tr td.nolan_content_col,
 .nolan_table tr td.nolan_nav {border-right: 1px solid #E3E3E3;}
 .nolan_table tr td.nolan_drag_handle {border-left: 1px solid #E3E3E3;}
 .nolan_table {}
 .nolan_table th {border-bottom: 1px solid #E3E3E3; padding: 3px 5px;}
+
+.nolan_table tr.ui-sortable-placeholder td {background: #666; background: rgba(0,0,0,0.4); visibility: visible !important}

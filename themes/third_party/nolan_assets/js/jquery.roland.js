@@ -108,7 +108,7 @@
   // Updates the indexes of any form elements.
   $.fn.roland.updateIndexes = function($container, opts){
     $container.find('.' + opts.rowClass).each(function(rowCount) {
-      regex = /^(.*)\[(?:[0-9]+)\](.*)$/;
+      regex = /^(.*)\[(?:[0-9]+)\](.*)$/; // tweaked also for Nolan
 
       $(this).find('input, select, textarea').each(function(fieldCount) {
         $field = $(this);
