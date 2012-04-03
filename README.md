@@ -4,7 +4,7 @@
 
 Nolan enables a very simple matrix style field within a [Pixel & Tonic Matrix](http://pixelandtonic.com/matrix) field
 
-![Field Output](http://iain.co.nz/dev/nolan_field.png)
+![Field Output](http://iain.co.nz/dev/nolan_field2.png)
 
 ### Installing/Usage
 Install the Nolan Fieldtype and you'll see 'Nolan' as an available celltype when configuring Matrix.
