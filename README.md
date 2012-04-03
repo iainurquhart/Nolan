@@ -28,6 +28,14 @@ Then if my matrix field had the short name 'teams', I could access the Nolan fie
 ### Documentation
 A work in progress.
 
+#### Screenshots:
+
+Configuration:
+![Configuration](http://iain.co.nz/dev/nolan_config.png)
+
+Field/Cell:
+![Field Output](http://iain.co.nz/dev/nolan_field.png)
+
 ### Support and Feature Requests
 Not officially supported but send requests/bug reports/pull requests here to this repo - NOT to devot:ee as I won't get notified. 
 
