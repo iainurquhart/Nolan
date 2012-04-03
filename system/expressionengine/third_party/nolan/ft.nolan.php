@@ -94,7 +94,7 @@ class Nolan_ft extends EE_Fieldtype
 		{
 			$data = unserialize($data);
 		}
-		elseif(is_array($data)) // come's back as array if publish page validation fails
+		elseif(is_array($data)) // comes back as array if publish page validation fails
 		{
 			foreach($data as $col_name => $values)
 			{

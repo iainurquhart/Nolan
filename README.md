@@ -4,6 +4,8 @@
 
 Nolan enables a very simple matrix style field within a Pixel & Tonic Matrix field
 
+![Field Output](http://iain.co.nz/dev/nolan_field.png)
+
 ### Installing/Usage
 Install the Nolan Fieldtype and you'll see 'Nolan' as an available celltype when configuring Matrix.
 
@@ -15,6 +17,8 @@ For example, I maybe have a Nolan cell with a short name of 'players', and I wan
 
 In Column Labels, I'd enter: **First Name | Last Name | Position** <br />
 In Column Names, I'd enter: **first_name | last_name | position**
+
+![Configuration](http://iain.co.nz/dev/nolan_config.png)
 
 Then if my matrix field had the short name 'teams', I could access the Nolan fields like so:
 
@@ -33,12 +37,6 @@ Additional variables available are:
 
 ### Caveats
 Changing a Nolan cells short name will **not** update existing values set, so choose your short names wisely.
-
-#### Screenshots:
-
-![Configuration](http://iain.co.nz/dev/nolan_config.png)
-
-![Field Output](http://iain.co.nz/dev/nolan_field.png)
 
 ### Support and Feature Requests
 This celltype was developed for a specific task and has been 'generalised' for GitHub. I haven't done a whole lot of testing so be aware if you're using in a production environment.
