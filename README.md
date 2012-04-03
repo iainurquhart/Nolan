@@ -2,7 +2,7 @@
 
 ### Overview
 
-Nolan enables a very simple matrix style field within a Pixel & Tonic Matrix field
+Nolan enables a very simple matrix style field within a [Pixel & Tonic Matrix](http://pixelandtonic.com/matrix) field
 
 ![Field Output](http://iain.co.nz/dev/nolan_field.png)
 
@@ -42,6 +42,12 @@ Changing a Nolan cells short name will **not** update existing values set, so ch
 This celltype was developed for a specific task and has been 'generalised' for GitHub. I haven't done a whole lot of testing so be aware if you're using in a production environment.
 
 The add-on is not officially supported but send requests/bug reports/pull requests here to this repo - NOT to devot:ee as I won't get notified. 
+
+### Hat tip
+
+Hat tip to Stephen Lewis [@monooso](http://twitter.com/monooso) of Experience Internet for [Roland.js](https://github.com/experience/jquery.roland.js) which I modified with permission for Nolan.
+
+* * *
 
 Copyright (c) 2012 Iain Urquhart
 http://iain.co.nz
