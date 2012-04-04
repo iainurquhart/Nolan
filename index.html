@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Nolan : Kinda like inception, but for Matrix." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Nolan</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/iainurquhart/Nolan">Fork Me on GitHub</a>
+
+          <h1 id="project_title">Nolan</h1>
+          <h2 id="project_tagline">Kinda like inception, but for Matrix.</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/iainurquhart/Nolan/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/iainurquhart/Nolan/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Nolan CellType for ExpressionEngine 2.0 Matrix Field</h1>
+
+<h3>Overview</h3>
+
+<p>Nolan enables a very simple matrix style field within a <a href="http://pixelandtonic.com/matrix">Pixel &amp; Tonic Matrix</a> field</p>
+
+<p><img src="http://iain.co.nz/dev/nolan_field2.png" alt="Field Output"></p>
+
+<h3>Installing/Usage</h3>
+
+<p>Install the Nolan Fieldtype and you'll see 'Nolan' as an available celltype when configuring Matrix.</p>
+
+<p>Two required configuration fields are Column Labels and Column Names.</p>
+
+<p>'Column Labels' are what your publishers see, and 'Column Names' are what you reference in templates.</p>
+
+<p>For example, I maybe have a Nolan cell with a short name of 'players', and I want it to contain first and last names of team players along with their position in the game.</p>
+
+<p>In Column Labels, I'd enter: <strong>First Name | Last Name | Position</strong> <br>
+In Column Names, I'd enter: <strong>first_name | last_name | position</strong></p>
+
+<p><img src="http://iain.co.nz/dev/nolan_config.png" alt="Configuration"></p>
+
+<p>Then if my matrix field had the short name 'teams', I could access the Nolan fields like so:</p>
+
+<pre><code>{teams} &lt;!-- matrix field --&gt;
+    {players}&lt;!-- nolan cell --&gt;
+        {first_name}, {last_name} - {position}
+    {/players}
+{/teams}
+</code></pre>
+
+<p>Additional variables available are:</p>
+
+<pre><code>{total_nolan_cols} - Number of columns in the Nolan cell
+{total_nolan_rows} - Number of rows in the Nolan cell
+{nolan_row_count} - Same as {count} to avoid variable clashes
+</code></pre>
+
+<h3>Caveats</h3>
+
+<p>Changing a Nolan cells short name will <strong>not</strong> update existing values set, so choose your short names wisely.</p>
+
+<h3>Support and Feature Requests</h3>
+
+<p>This celltype was developed for a specific task and has been 'generalised' for GitHub. I haven't done a whole lot of testing so be aware if you're using in a production environment.</p>
+
+<p>The add-on is not officially supported but send requests/bug reports/pull requests here to this repo - NOT to devot:ee as I won't get notified. </p>
+
+<h3>Hat tip</h3>
+
+<p>Hat tip to Stephen Lewis <a href="http://twitter.com/monooso">@monooso</a> of Experience Internet for <a href="https://github.com/experience/jquery.roland.js">Roland.js</a> which I modified with permission for Nolan.</p>
+
+<hr><p>Copyright (c) 2012 Iain Urquhart
+<a href="http://iain.co.nz">http://iain.co.nz</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Nolan maintained by <a href="https://github.com/iainurquhart">iainurquhart</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
