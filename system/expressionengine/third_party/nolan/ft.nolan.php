@@ -82,7 +82,7 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function display_cell($data)
 	{
-				
+		
 		$this->_add_nolan_assets();
 		$this->EE->load->library('table');
 		$vars = array();
@@ -92,7 +92,7 @@ class Nolan_ft extends EE_Fieldtype
 		
 		if($data != '' && !is_array($data))
 		{
-			$data = unserialize($data);
+			$data = unserialize( html_entity_decode($data, ENT_COMPAT, 'UTF-8') );
 		}
 		elseif(is_array($data)) // comes back as array if publish page validation fails
 		{
@@ -100,7 +100,7 @@ class Nolan_ft extends EE_Fieldtype
 			{
 				foreach($values as $key => $value)
 				{
-					$new_data[$key][$col_name] = $value;
+					$new_data[$key][$col_name] = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
 				}
 			}
 			
@@ -114,7 +114,6 @@ class Nolan_ft extends EE_Fieldtype
 		$vars['nav'] 		 = $this->nolan_nav;
 
 		if(is_array($data))  $vars['row_data'] = $this->process_array($vars['col_names'], $data);
-		
 
 		return $this->EE->load->view('cell', $vars, TRUE);
 	}
@@ -170,7 +169,7 @@ class Nolan_ft extends EE_Fieldtype
 		{
 			$data = serialize($data);
 		}
-		
+				
 		return $data;
 	}
 	
