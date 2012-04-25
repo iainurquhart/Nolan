@@ -20,7 +20,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '1.0.0'
+		'version' => '1.0.1'
 	);
 	
 	var $has_array_data = TRUE;
