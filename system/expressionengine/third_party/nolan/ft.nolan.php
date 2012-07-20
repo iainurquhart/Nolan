@@ -20,7 +20,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '1.0.1'
+		'version' => '1.0.2'
 	);
 	
 	var $has_array_data = TRUE;
@@ -227,17 +227,26 @@ class Nolan_ft extends EE_Fieldtype
 		if($tagdata)
 		{
 			
+			$limit =  ( isset($params['limit']) ) ? $params['limit'] : '';
+
 			$count_vars['total_nolan_cols'] = count($this->get_col_attributes());
 			$count_vars['total_nolan_rows'] = count($data);
 			
 			$tagdata = $this->EE->functions->var_swap($tagdata, $count_vars);
 			$tagdata = $this->EE->functions->prep_conditionals($tagdata, $count_vars);
 			
+			// Everybody loves backspace
+			if (isset($params['backspace']))
+			{
+				$tagdata = substr($tagdata, 0, - (int) $params['backspace']);
+			}
+
 			$i = 1;
 			
 			foreach($data as &$item)
 			{
 				$item['nolan_row_count'] = $i++;
+				if($i > $limit) unset( $data[$i-1] ); // unset items over our limit
 			}
 			
 			return $this->EE->TMPL->parse_variables($tagdata, $data);
@@ -247,6 +256,7 @@ class Nolan_ft extends EE_Fieldtype
 		{
 			return 1; // for simple {if fieldname} conditionals
 		}
+		
 	}
 	
 	

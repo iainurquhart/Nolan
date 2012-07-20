@@ -34,6 +34,11 @@ Additional variables available are:
 	{total_nolan_rows} - Number of rows in the Nolan cell
 	{nolan_row_count} - Same as {count} to avoid variable clashes
 
+Parameters
+
+	limit="3" - limit the returned rows
+	backspace="1" - remove end characters from the final output
+
 
 ### Caveats
 Changing a Nolan cells short name will **not** update existing values set, so choose your short names wisely.
