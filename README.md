@@ -38,6 +38,7 @@ Parameters
 
 	limit="3" - limit the returned rows
 	backspace="1" - remove end characters from the final output
+	offset="1" - skip initial rows
 
 
 ### Caveats
