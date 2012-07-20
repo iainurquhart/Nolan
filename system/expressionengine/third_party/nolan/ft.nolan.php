@@ -20,7 +20,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '1.0.2'
+		'version' => '1.0.3'
 	);
 	
 	var $has_array_data = TRUE;
@@ -227,28 +227,29 @@ class Nolan_ft extends EE_Fieldtype
 		if($tagdata)
 		{
 			
-			$limit =  ( isset($params['limit']) ) ? $params['limit'] : '';
+			$limit  	=  ( isset($params['limit']) ) ? (int) $params['limit'] : '';
+			$offset 	=  ( isset($params['offset']) ) ? (int) $params['offset'] : '';
+			$backspace 	=  ( isset($params['backspace']) ) ? (int) $params['backspace'] : '';
 
 			$count_vars['total_nolan_cols'] = count($this->get_col_attributes());
 			$count_vars['total_nolan_rows'] = count($data);
 			
 			$tagdata = $this->EE->functions->var_swap($tagdata, $count_vars);
 			$tagdata = $this->EE->functions->prep_conditionals($tagdata, $count_vars);
-			
-			// Everybody loves backspace
-			if (isset($params['backspace']))
-			{
-				$tagdata = substr($tagdata, 0, - (int) $params['backspace']);
-			}
+
+			if( $backspace )  substr($tagdata, 0, - $backspace);
+			if( $offset ) $data = array_slice($data, $offset);
+			if( $limit )  $data = array_slice($data, 0, $limit);
+
+			if( ! $data ) return ''; // offset and limit might have nulled our data array
 
 			$i = 1;
 			
-			foreach($data as &$item)
+			foreach($data as $key => &$item)
 			{
 				$item['nolan_row_count'] = $i++;
-				if( $limit && $i > $limit ) unset( $data[$i-1] ); // unset items over our limit
 			}
-			
+
 			return $this->EE->TMPL->parse_variables($tagdata, $data);
 
 		}
