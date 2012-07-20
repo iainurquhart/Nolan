@@ -246,7 +246,7 @@ class Nolan_ft extends EE_Fieldtype
 			foreach($data as &$item)
 			{
 				$item['nolan_row_count'] = $i++;
-				if($i > $limit) unset( $data[$i-1] ); // unset items over our limit
+				if( $limit && $i > $limit ) unset( $data[$i-1] ); // unset items over our limit
 			}
 			
 			return $this->EE->TMPL->parse_variables($tagdata, $data);
@@ -256,7 +256,7 @@ class Nolan_ft extends EE_Fieldtype
 		{
 			return 1; // for simple {if fieldname} conditionals
 		}
-		
+
 	}
 	
 	
