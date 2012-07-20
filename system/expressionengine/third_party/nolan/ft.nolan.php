@@ -237,7 +237,7 @@ class Nolan_ft extends EE_Fieldtype
 			$tagdata = $this->EE->functions->var_swap($tagdata, $count_vars);
 			$tagdata = $this->EE->functions->prep_conditionals($tagdata, $count_vars);
 
-			if( $backspace )  $tagdata = substr($tagdata, 0, - $backspace);
+			
 			if( $offset ) $data = array_slice($data, $offset);
 			if( $limit )  $data = array_slice($data, 0, $limit);
 
@@ -250,7 +250,11 @@ class Nolan_ft extends EE_Fieldtype
 				$item['nolan_row_count'] = $i++;
 			}
 
-			return $this->EE->TMPL->parse_variables($tagdata, $data);
+			$r = $this->EE->TMPL->parse_variables($tagdata, $data);
+
+			if( $backspace )  $r = substr($r, 0, - $backspace);
+
+			return $r;
 
 		}
 		else
