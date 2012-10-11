@@ -40,7 +40,7 @@ class Nolan_ft extends EE_Fieldtype
 		parent::EE_Fieldtype();
 		
 		$this->site_id 		= $this->EE->config->item('site_id');
-		$this->asset_path 	= $this->EE->config->item('theme_folder_url').'third_party/nolan_assets/';
+		$this->asset_path	= defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES . '/nolan_assets' : $this->EE->config->item('theme_folder_url') . '/third_party/nolan_assets';
 		$this->drag_handle  = '&nbsp;';
 		$this->nolan_nav 	= '<a class="remove_row" href="#">-</a> <a class="add_row" href="#">+</a>';
 		$this->cache 	   =& $this->EE->session->cache['nolan_ft_data'];
@@ -441,5 +441,5 @@ class Nolan_ft extends EE_Fieldtype
 
 }
 
-/* End of file ft.taxonomy.php */
-/* Location: ./system/expressionengine/third_party/taxonomy/ft.taxonomy.php */
+/* End of file ft.nolan.php */
+/* Location: ./system/expressionengine/third_party/nolan/ft.nolan.php */
