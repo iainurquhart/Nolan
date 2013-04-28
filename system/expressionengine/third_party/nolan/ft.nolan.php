@@ -92,7 +92,7 @@ class Nolan_ft extends EE_Fieldtype
 		
 		if($data != '' && !is_array($data))
 		{
-			$data = unserialize( html_entity_decode($data, ENT_COMPAT, 'UTF-8') );
+			$data = unserialize( urldecode(html_entity_decode($data, ENT_COMPAT, 'UTF-8')) );
 		}
 		elseif(is_array($data)) // comes back as array if publish page validation fails
 		{
@@ -100,7 +100,7 @@ class Nolan_ft extends EE_Fieldtype
 			{
 				foreach($values as $key => $value)
 				{
-					$new_data[$key][$col_name] = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
+					$new_data[$key][$col_name] = urldecode(html_entity_decode($value, ENT_COMPAT, 'UTF-8'));
 				}
 			}
 			
@@ -167,7 +167,7 @@ class Nolan_ft extends EE_Fieldtype
 		
 		if(is_array($data))
 		{
-			$data = serialize($data);
+			$data = urlencode(serialize($data));
 		}
 				
 		return $data;
