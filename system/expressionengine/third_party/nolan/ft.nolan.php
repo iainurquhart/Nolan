@@ -205,7 +205,7 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function pre_process($data)
 	{
-		return ($data != '') ? unserialize($data) : array();
+		return ($data != '') ? $data : array();
 	}
 	
 	
@@ -223,6 +223,8 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function replace_tag($data, $params = array(), $tagdata = FALSE)
 	{
+
+		$data = unserialize( urldecode(html_entity_decode($data, ENT_COMPAT, 'UTF-8')) );
 
 		if($tagdata)
 		{
