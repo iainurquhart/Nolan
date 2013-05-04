@@ -205,7 +205,7 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function pre_process($data)
 	{
-		return ($data != '') ? unserialize($data) : array();
+		return ($data != '') ? unserialize(urldecode($data)) : array();
 	}
 	
 	
