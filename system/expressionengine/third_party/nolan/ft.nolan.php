@@ -20,14 +20,12 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '1.0.3.1'
+		'version' => '2.1'
 	);
 	
-	var $has_array_data = TRUE;
-	
-	
+	var $has_array_data = TRUE;	
+
 	// --------------------------------------------------------------------
-	
 	
 	/**
 	 * constructor
@@ -43,7 +41,7 @@ class Nolan_ft extends EE_Fieldtype
 		$this->asset_path	= defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES . '/nolan_assets' : $this->EE->config->item('theme_folder_url') . '/third_party/nolan_assets';
 		$this->drag_handle  = '&nbsp;';
 		$this->nolan_nav 	= '<a class="remove_row" href="#">-</a> <a class="add_row" href="#">+</a>';
-		$this->cache 	   =& $this->EE->session->cache['nolan_ft_data'];
+		$this->nolan_cache 	   =& $this->EE->session->cache['nolan_ft_data'];
 	}
 	
 	
@@ -52,7 +50,31 @@ class Nolan_ft extends EE_Fieldtype
 	
 	public function install()
 	{
-		return array();
+		return array(
+			'nolan_license'  => ''
+		);
+	}
+	
+	// --------------------------------------------------------------------
+
+	public function accepts_content_type($name)
+	{
+		return ($name == 'channel' || $name == 'grid');
+	}
+
+	// --------------------------------------------------------------------
+
+	public function display_global_settings()
+	{
+		$nolan_license = (isset($this->settings['nolan_license'])) ? $this->settings['nolan_license'] : '';
+		return form_label('nolan_license', 'nolan_license').NBS.form_input('nolan_license', $nolan_license).NBS.NBS.NBS.' ';
+	}
+
+	// --------------------------------------------------------------------
+
+	public function save_global_settings()
+	{
+		return array_merge($this->settings, $_POST);
 	}
 	
 	// --------------------------------------------------------------------
@@ -66,10 +88,34 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function display_field($data)
 	{
-		$vars = array();
-		return $this->EE->load->view('field', $vars, TRUE);
+		return $this->display_cell($data, 'field');
 	}
+
+	public function grid_display_field($data)
+	{
+	   return $this->display_cell($data);
+	}
+
+	// --------------------------------------------------------------------
 	
+	/**
+	 * grid_display_settings
+	 * 
+	 * @access	public
+	 * @param	mixed $data
+	 * @return	array
+	 */
+	public function grid_display_settings($data)
+	{
+		$this->EE->lang->loadfile('nolan');
+		$nolan_col_labels = (isset($data['nolan_col_labels'])) ? $data['nolan_col_labels'] : '';
+		$nolan_col_names  = (isset($data['nolan_col_names']))  ? $data['nolan_col_names']  : '';
+
+		return array(
+			EE_Fieldtype::grid_settings_row(lang('nolan_col_labels'), form_input('nolan_col_labels', $nolan_col_labels), FALSE),
+			EE_Fieldtype::grid_settings_row(lang('nolan_col_names'), form_input('nolan_col_names', $nolan_col_names), FALSE)
+		);
+	}
 	
 	// --------------------------------------------------------------------
 	
@@ -80,7 +126,7 @@ class Nolan_ft extends EE_Fieldtype
 	 * @param	mixed $data
 	 * @return	void
 	 */
-	public function display_cell($data)
+	public function display_cell($data, $type = 'cell')
 	{
 		
 		$this->_add_nolan_assets();
@@ -89,10 +135,13 @@ class Nolan_ft extends EE_Fieldtype
 		
 		$vars['col_labels'] = $this->get_col_attributes('nolan_col_labels');
 		$vars['col_names']  = $this->get_col_attributes('nolan_col_names');
+
+		// matrix is converting json quotes to entities...
+		$data = str_replace('&quot;', '"', $data);
 		
 		if($data != '' && !is_array($data))
 		{
-			$data = unserialize( html_entity_decode($data, ENT_COMPAT, 'UTF-8') );
+			$data = json_decode($data, TRUE);
 		}
 		elseif(is_array($data)) // comes back as array if publish page validation fails
 		{
@@ -109,13 +158,14 @@ class Nolan_ft extends EE_Fieldtype
 		}
 		
 		$vars['row_data']    = array();
-		$vars['cell_name']   = $this->cell_name;
+		$vars['cell_name']   = (isset($this->cell_name)) ? $this->cell_name : $this->field_name;
 		$vars['drag_handle'] = $this->drag_handle;
 		$vars['nav'] 		 = $this->nolan_nav;
 
 		if(is_array($data))  $vars['row_data'] = $this->process_array($vars['col_names'], $data);
 
-		return $this->EE->load->view('cell', $vars, TRUE);
+
+		return $this->EE->load->view($type, $vars, TRUE);
 	}
 	
 	
@@ -131,7 +181,7 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function save($data)
 	{
-		return $data;
+		return $this->save_cell($data);
 	}
 	
 	
@@ -152,8 +202,11 @@ class Nolan_ft extends EE_Fieldtype
 		
 		$new_data = array();
 
+		$data = (!is_array($data)) ? json_decode($data, TRUE) : $data;
+
 		if(count($data))
 		{
+
 			foreach($data as $col_name => $values)
 			{
 				foreach($values as $key => $value)
@@ -162,12 +215,15 @@ class Nolan_ft extends EE_Fieldtype
 				}
 			}
 		}
-		
+
+
 		$data = $this->process_array($nolan_col_names, $new_data);
+
+
 		
 		if(is_array($data))
 		{
-			$data = serialize($data);
+			$data = json_encode($data);
 		}
 				
 		return $data;
@@ -187,8 +243,7 @@ class Nolan_ft extends EE_Fieldtype
 	function post_save($data)
 	{
 	
-		$data = $this->cache['data'][$this->settings['field_id']];
-		return '';
+		return $this->save_cell($data);
 	
 	}
 	
@@ -205,7 +260,7 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function pre_process($data)
 	{
-		return ($data != '') ? unserialize($data) : array();
+		return ($data != '') ? json_decode($data, TRUE) : array();
 	}
 	
 	
@@ -230,14 +285,14 @@ class Nolan_ft extends EE_Fieldtype
 			$limit  	=  ( isset($params['limit']) ) ? (int) $params['limit'] : '';
 			$offset 	=  ( isset($params['offset']) ) ? (int) $params['offset'] : '';
 			$backspace 	=  ( isset($params['backspace']) ) ? (int) $params['backspace'] : '';
+			$cols 		=    $this->get_col_attributes();
 
-			$count_vars['total_nolan_cols'] = count($this->get_col_attributes());
+			$count_vars['total_nolan_cols'] = count($cols);
 			$count_vars['total_nolan_rows'] = count($data);
 			
 			$tagdata = $this->EE->functions->var_swap($tagdata, $count_vars);
 			$tagdata = $this->EE->functions->prep_conditionals($tagdata, $count_vars);
 
-			
 			if( $offset ) $data = array_slice($data, $offset);
 			if( $limit )  $data = array_slice($data, 0, $limit);
 
@@ -248,6 +303,16 @@ class Nolan_ft extends EE_Fieldtype
 			foreach($data as $key => &$item)
 			{
 				$item['nolan_row_count'] = $i++;
+
+				// make sure vars are defined for each column in
+				// the nolan column_labels
+				foreach($cols as $col)
+				{
+					if( ! isset($item[$col]) )
+					{
+						$item[$col] = '';
+					}
+				}
 			}
 
 			$r = $this->EE->TMPL->parse_variables($tagdata, $data);
@@ -276,10 +341,20 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function display_settings($data)
 	{
-		$vars = array();
+
+		$this->EE->lang->loadfile('nolan');
+
+		if (! isset($data['nolan_col_labels'])) $data['nolan_col_labels'] = '';
+		if (! isset($data['nolan_col_names'])) $data['nolan_col_names'] = '';
 
 		$this->EE->table->add_row(
-			array('data' => $this->EE->load->view('field_settings', $vars, TRUE), 'colspan' => 2)				
+			lang('nolan_col_labels'),
+			 form_input('nolan_col_labels', $data['nolan_col_labels'])		
+		);
+
+		$this->EE->table->add_row(
+			lang('nolan_col_names'),
+			 form_input('nolan_col_names', $data['nolan_col_names'])		
 		);
 			
 	}
@@ -304,8 +379,8 @@ class Nolan_ft extends EE_Fieldtype
 		if (! isset($data['nolan_col_names'])) $data['nolan_col_names'] = '';
 		
 		return array(
-			array(lang('col_labels'), form_input('nolan_col_labels', $data['nolan_col_labels'], 'class="matrix-textarea"')),
-			array(lang('col_names'), form_input('nolan_col_names', $data['nolan_col_names'], 'class="matrix-textarea"'))
+			array(lang('nolan_col_labels'), form_input('nolan_col_labels', $data['nolan_col_labels'], 'class="matrix-textarea"')),
+			array(lang('nolan_col_names'), form_input('nolan_col_names', $data['nolan_col_names'], 'class="matrix-textarea"'))
 		);
 	}
 		
@@ -322,18 +397,78 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function save_settings($data)
 	{
-		
-		$options = $this->EE->input->post('options');
-		
-		if(is_array($options))
-		{
-			$options = serialize($options);
-		}
-				
 		return array(
-			'nolan_options' => $options,
+			'nolan_col_labels' => $data['nolan_col_labels'],
+			'nolan_col_names' => $data['nolan_col_names']
 		);
 	}
+
+
+	// --------------------------------------------------------------------
+
+
+	public function update($from)
+	{
+	    if ($from == $this->info['version']) return FALSE;
+
+	    if (version_compare($from, '2', '<'))
+	    {
+
+	    	// get all our nolan columns
+	        $nolan_cols = $this->EE->db->get_where(
+	        	'matrix_cols', 
+	        	 array('col_type' => 'nolan')
+	        )->result_array();
+
+	        // each column in matrix_data needs to be updated
+	        foreach($nolan_cols as $col)
+	        {
+
+	        	$nolan_rows = $this->EE->db->get_where(
+	        		'matrix_data', 
+	        		 array(
+	        		 	'col_id_'.$col['col_id'].' IS NOT NULL' => NULL
+	        		 )
+	        	)->result_array();
+
+
+	        	foreach($nolan_rows as $row)
+	        	{
+
+	        		$old_data = @unserialize($row['col_id_'.$col['col_id']]);
+
+	        		if(is_array($old_data))
+	        		{
+
+						$this->EE->db->update(
+							'matrix_data', 
+							array(
+								'col_id_'.$col['col_id'] => (string) json_encode( $old_data )
+							), 
+							array('row_id' => $row['row_id'])
+						);
+
+	        		}
+
+	        	}
+	        	
+	        }
+
+	        $this->EE->db->update(
+				'fieldtypes', 
+				array('has_global_settings' => 'y'), 
+				array('name' => 'nolan')
+			);
+
+	    }
+
+	    return TRUE;
+	}
+
+
+
+
+	
 	
 	
 	// --------------------------------------------------------------------
@@ -344,11 +479,11 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	private function _add_nolan_assets()
 	{
-		if (! isset($this->cache['assets_added']) )
+		if (! isset($this->nolan_cache['assets_added']) )
 		{
-			$this->cache['assets_added'] = 1;
+			$this->nolan_cache['assets_added'] = 1;
 			
-			$this->EE->cp->add_to_head('
+			$this->EE->cp->add_to_foot('
 				<link type="text/css" href="'.$this->asset_path.'/css/nolan.css" rel="stylesheet" />
 				<script src="'.$this->asset_path.'/js/jquery.roland.js"></script>
 				<script src="'.$this->asset_path.'/js/nolan.js"></script>
@@ -389,6 +524,7 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	private function process_array($keys, $arrays)
 	{
+
 	    $final = array();
 	
 	    foreach($arrays as $a)
@@ -400,6 +536,8 @@ class Nolan_ft extends EE_Fieldtype
 	        }
 	        $final[] = $next;
 	    }
+
+
 	
 	    return $final;
 	}

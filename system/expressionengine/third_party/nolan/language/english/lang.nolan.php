@@ -1,8 +1,8 @@
 <?php
 
 $lang = array(
-	"col_labels" => 'Column Labels',
-	"col_names"  => 'Column Names',
+	"nolan_col_labels" => 'Column Labels',
+	"nolan_col_names"  => 'Column Names',
 
 ''=>''
 );

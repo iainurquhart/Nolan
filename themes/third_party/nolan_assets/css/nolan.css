@@ -1,4 +1,4 @@
-.nolan_table td.nolan_drag_handle {background-image: url(../gfx/drag_handle.png); background-repeat: no-repeat; background-position: 50% 50%; padding: 5px 12px; background-color: #E2E2E2; background-color: rgba(0, 0, 0, 0.06); border-right: 1px solid #E3E3E3;}
+.nolan_table td.nolan_drag_handle {background-image: url(../gfx/drag_handle.png); background-repeat: no-repeat; background-position: 50% 50%; padding: 5px 12px !important; background-color: #E2E2E2; background-color: rgba(0, 0, 0, 0.06); border-right: 1px solid #E3E3E3;}
 .nolan_table .ui-sortable-helper {display: block; -webkit-box-shadow:  2px 2px 3px rgba(0,0,0,0.4); -moz-box-shadow: 0 0 5px rgba(0,0,0,0.4); box-shadow:  0 0 5px rgba(0,0,0,0.4); border-top: 1px solid #fff; opacity: 0.85;}
 .nolan_table td.nolan_drag_handle:hover {cursor: move; cursor: -webkit-grab;}
 .nolan_table a.add_row,
@@ -19,3 +19,14 @@
 .nolan_table th {border-bottom: 1px solid #E3E3E3; padding: 3px 5px;}
 
 .nolan_table tr.ui-sortable-placeholder td {background: #666; background: rgba(0,0,0,0.4); visibility: visible !important}
+
+
+
+.grid_cell .nolan_table tr td {padding: 0px;}
+#publish table.grid_field_container .nolan_table thead th {border: none; font-size: 12px; background: #fff; padding: 3px 0 5px 8px;}
+#publish table.grid_field .nolan_table {border-bottom: 1px solid #c9cfd4;}
+#publish table.grid_field .nolan_table td.nolan_drag_handle { border-left: 1px solid #c9cfd4;}
+#publish table.grid_field .nolan_table tr td.nolan_content_col {border-right: none;}
+#publish table.grid_field .nolan_table td {border-bottom: none;}
+#publish table.grid_field .nolan_table input[type=text] {padding: 8px !important; border: 1px solid: #fff;}
+#publish table.grid_field .nolan_table input[type=text]:focus {border: none;}

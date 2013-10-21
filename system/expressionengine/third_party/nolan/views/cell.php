@@ -31,14 +31,3 @@
 	
 	</tbody>
 </table>
-<!-- 
-<pre>
-	<?php // print_r($row_data);?>
-	
-	<hr />
-	
-	<?php // print_r($col_names);?>
-	
-</pre>
-
--->
