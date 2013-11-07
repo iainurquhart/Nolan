@@ -8,7 +8,7 @@
 			<th></th>
 		</tr>
 	</thead>
-	<tbody class="native_nolan">
+	<tbody class="native_nolan" data-maxrows="<?=$max_rows?>">
 	<?php foreach($row_data as $key => $row): ?>
 		<tr class="row">
 			<td class='nolan_drag_handle'>&nbsp;</td>

@@ -137,8 +137,16 @@
   // Updates the navigation buttons.
   function updateNav($container, opts) {
     var $remove = $container.find('.' + opts.removeRowClass);
+    var $add = $container.find('.' + opts.addRowClass);
     var $rows = $container.find('.' + opts.rowClass);
+    var $maxRows = $container.data('maxrows');
+    
+    if($maxRows){
+      $rows.size() == $container.data('maxrows') ? $add.hide() : $add.show();
+    }
+
     $rows.size() == 1 ? $remove.hide() : $remove.show();
+    
   };
 
 

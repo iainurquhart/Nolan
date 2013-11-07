@@ -20,7 +20,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.1.1'
+		'version' => '2.2'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -110,10 +110,14 @@ class Nolan_ft extends EE_Fieldtype
 		$this->EE->lang->loadfile('nolan');
 		$nolan_col_labels = (isset($data['nolan_col_labels'])) ? $data['nolan_col_labels'] : '';
 		$nolan_col_names  = (isset($data['nolan_col_names']))  ? $data['nolan_col_names']  : '';
+		$nolan_max_rows  = (isset($data['nolan_max_rows']))  ? $data['nolan_max_rows']  : '';
+
+		
 
 		return array(
 			EE_Fieldtype::grid_settings_row(lang('nolan_col_labels'), form_input('nolan_col_labels', $nolan_col_labels), FALSE),
-			EE_Fieldtype::grid_settings_row(lang('nolan_col_names'), form_input('nolan_col_names', $nolan_col_names), FALSE)
+			EE_Fieldtype::grid_settings_row(lang('nolan_col_names'), form_input('nolan_col_names', $nolan_col_names), FALSE),
+			EE_Fieldtype::grid_settings_row(lang('nolan_max_rows'), form_input('nolan_max_rows', $nolan_max_rows), FALSE)
 		);
 	}
 	
@@ -135,6 +139,7 @@ class Nolan_ft extends EE_Fieldtype
 		
 		$vars['col_labels'] = $this->get_col_attributes('nolan_col_labels');
 		$vars['col_names']  = $this->get_col_attributes('nolan_col_names');
+		$vars['max_rows']	= (isset($this->settings['nolan_max_rows'])) ? $this->settings['nolan_max_rows'] : '';
 
 		// matrix is converting json quotes to entities...
 		$data = str_replace('&quot;', '"', $data);
@@ -346,6 +351,8 @@ class Nolan_ft extends EE_Fieldtype
 
 		if (! isset($data['nolan_col_labels'])) $data['nolan_col_labels'] = '';
 		if (! isset($data['nolan_col_names'])) $data['nolan_col_names'] = '';
+		if (! isset($data['nolan_max_rows'])) $data['nolan_max_rows'] = '';
+
 
 		$this->EE->table->add_row(
 			lang('nolan_col_labels'),
@@ -355,6 +362,11 @@ class Nolan_ft extends EE_Fieldtype
 		$this->EE->table->add_row(
 			lang('nolan_col_names'),
 			 form_input('nolan_col_names', $data['nolan_col_names'])		
+		);
+
+		$this->EE->table->add_row(
+			lang('nolan_max_rows'),
+			 form_input('nolan_max_rows', $data['nolan_max_rows'])		
 		);
 			
 	}
@@ -377,10 +389,12 @@ class Nolan_ft extends EE_Fieldtype
 	
 		if (! isset($data['nolan_col_labels'])) $data['nolan_col_labels'] = '';
 		if (! isset($data['nolan_col_names'])) $data['nolan_col_names'] = '';
+		if (! isset($data['nolan_max_rows'])) $data['nolan_max_rows'] = '';
 		
 		return array(
 			array(lang('nolan_col_labels'), form_input('nolan_col_labels', $data['nolan_col_labels'], 'class="matrix-textarea"')),
-			array(lang('nolan_col_names'), form_input('nolan_col_names', $data['nolan_col_names'], 'class="matrix-textarea"'))
+			array(lang('nolan_col_names'), form_input('nolan_col_names', $data['nolan_col_names'], 'class="matrix-textarea"')),
+			array(lang('nolan_max_rows'), form_input('nolan_max_rows', $data['nolan_max_rows'], 'class="matrix-textarea"'))
 		);
 	}
 		
@@ -399,7 +413,8 @@ class Nolan_ft extends EE_Fieldtype
 	{
 		return array(
 			'nolan_col_labels' => $data['nolan_col_labels'],
-			'nolan_col_names' => $data['nolan_col_names']
+			'nolan_col_names' => $data['nolan_col_names'],
+			'nolan_max_rows' => $data['nolan_max_rows']
 		);
 	}
 
@@ -485,8 +500,8 @@ class Nolan_ft extends EE_Fieldtype
 			
 			$this->EE->cp->add_to_foot('
 				<link type="text/css" href="'.$this->asset_path.'/css/nolan.css" rel="stylesheet" />
-				<script src="'.$this->asset_path.'/js/jquery.roland.js"></script>
-				<script src="'.$this->asset_path.'/js/nolan.js"></script>
+				<script src="'.$this->asset_path.'/js/jquery.roland.js?v2.2"></script>
+				<script src="'.$this->asset_path.'/js/nolan.js?v2.2"></script>
 			');
 			
 			$this->EE->cp->add_js_script('ui', 'sortable');
