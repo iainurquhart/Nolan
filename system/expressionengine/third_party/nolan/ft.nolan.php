@@ -20,7 +20,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.1'
+		'version' => '2.1.1'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -35,7 +35,7 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function __construct()
 	{
-		parent::EE_Fieldtype();
+		parent::__construct();
 		
 		$this->site_id 		= $this->EE->config->item('site_id');
 		$this->asset_path	= defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES . '/nolan_assets' : $this->EE->config->item('theme_folder_url') . '/third_party/nolan_assets';
