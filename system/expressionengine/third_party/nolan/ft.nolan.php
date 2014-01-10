@@ -20,7 +20,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.2'
+		'version' => '2.3'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -66,8 +66,9 @@ class Nolan_ft extends EE_Fieldtype
 
 	public function display_global_settings()
 	{
+		ee()->lang->loadfile('nolan');
 		$nolan_license = (isset($this->settings['nolan_license'])) ? $this->settings['nolan_license'] : '';
-		return form_label('nolan_license', 'nolan_license').NBS.form_input('nolan_license', $nolan_license).NBS.NBS.NBS.' ';
+		return form_label(lang('nolan_license'), 'nolan_license').NBS.form_input('nolan_license', $nolan_license).NBS.NBS.NBS.' ';
 	}
 
 	// --------------------------------------------------------------------
