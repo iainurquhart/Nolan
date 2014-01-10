@@ -60,7 +60,7 @@ Acceptable values for the text_format parameter are:
 
 * xhtml - full parsing similar to an xhtml custom field
 * br - similar to an Auto BR custom field
-* lite - same as ExpresssionEngine entry Title fields (basically xhtml without the <p> wrappers)
+* lite - same as ExpresssionEngine entry Title fields (basically xhtml without the paragraph html wrappers)
 
 * * *
 
