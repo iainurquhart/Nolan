@@ -30,9 +30,11 @@ Then if my matrix field had the short name 'teams', I could access the Nolan fie
 	{teams} <!-- matrix field -->
 		{players}<!-- nolan cell -->
 			<h4{if star_player} class="star-player"{/if}>{first_name}, {last_name} - <em>{position}</em><h4>
-			{bio}
+			{exp:nolan:format text_format="xhtml"}{bio}{/exp:nolan:format}
 		{/players}
 	{/teams}
+
+Note here that the **{bio}** field is being parsed with xhtml typography using the Nolan plugin syntax.
 
 Additional variables available are:
 
