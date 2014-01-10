@@ -55,8 +55,7 @@ class Nolan {
 	{
 		ob_start(); 
 		?>
-		{exp:nolan:xhtml}Text to process as xhtml{/exp:nolan:xhtml}
-		{exp:nolan:auto_br}Text to process as auto br{/exp:nolan:auto_br}
+		
 
 		<?php
 		$buffer = ob_get_contents();
