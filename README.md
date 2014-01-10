@@ -15,10 +15,10 @@ Optional configuration fields are Column Field Types, and Maximum rows.
 
 'Column Labels' are what your publishers see, and 'Column Names' are what you reference in templates. Column field types allow you to use text inputs (default), textareas, and checkboxes.
 
-For example, I maybe have a Nolan cell with a short name of 'players', and I want it to contain first and last names of team players along with their position in the game. I also want to include a short bio, and also indicate if that player is a Star Player.
+For example, I have a Nolan cell with a short name of 'players', and I want it to contain first and last names of team players. I also want to include a short bio, and also indicate if that player is a Star Player.
 
-In Column Labels, I'd enter: **First Name | Last Name | Position** <br />
-In Column Names, I'd enter: **first_name | last_name | position**<br />
+In Column Labels, I'd enter: **First Name | Last Name | Bio | Star Player** <br />
+In Column Names, I'd enter: **first_name | last_name | bio | star_player**<br />
 In Column Field Types, I'd enter **text_input | text_input | textarea | checkbox**
 
 Given this is a five aside tournament, I want to restrict the number of Nolan rows available to 5 also.
