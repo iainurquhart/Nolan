@@ -1,1 +1,0 @@
-<p>This is a Matrix Celltype, it wouldn't take much to make it into a Fieldtype - but why would you with Matrix around?</p>
