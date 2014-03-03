@@ -46,7 +46,7 @@
           }
         });
 
-        $cloneRow.find('select').val('');
+        $cloneRow.find('select, textarea').val('');
 
         // Pre-add event. Only checks return value from last listener.
         if ($link.data('events').preAddRow !== undefined) {
