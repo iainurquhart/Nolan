@@ -1,53 +1,173 @@
-.nolan_table {border-bottom: 1px solid #dedfde;}
-.nolan_table td.nolan_drag_handle {background-image: url(../gfx/drag_handle.png) !important; background-repeat: no-repeat  !important; background-position: 50% 10%  !important; padding: 5px 12px !important; background-color: #fff; border-right: 5px solid #ecedec; border-left: 1px solid #dedfde;}
-.nolan_table .ui-sortable-helper {display: block; -webkit-box-shadow:  2px 2px 3px rgba(0,0,0,0.4); -moz-box-shadow: 0 0 5px rgba(0,0,0,0.4); box-shadow:  0 0 5px rgba(0,0,0,0.4); border-top: 1px solid #fff; opacity: 0.85;}
-.nolan_table td.nolan_drag_handle:hover {cursor: move; cursor: -webkit-grab;}
-.nolan_table a.add_row,
-.nolan_table a.remove_row {display: block; width: 16px; height: 16px; text-indent: 100%;white-space: nowrap;overflow: hidden; display: inline-block; }
-.nolan_table a.add_row {background: url(../gfx/plus.png); margin-right: 5px;}
-.nolan_table a.remove_row {background: url(../gfx/minus.png);}
-.nolan_table tr td.nolan_nav {white-space: nowrap; text-align: center; line-height: 16px; padding: 5px 5px 0 5px; border-right: 1px solid #dedfde;}
-.nolan_table tr td {vertical-align: top; border-top: 1px solid #dedfde !important; }
-.nolan_table tr td.nolan_content_col {background: #ecedec;}
-.nolan_table {width: 100%;}
-.nolan_table input {padding-left: 0; padding-right: 0;}
-.nolan_table input,
-.nolan_table input:focus,
-.nolan_table textarea,
-.nolan_table textarea:focus {border: 1px solid #dedfde; padding: 6px 3px; margin: 0; font-size: 11px; font-family: 'Lucida Grande', sans-serif; background: #fff;}
-.nolan_table textarea {height: 68px;}
-.nolan_table tr td { border: none; padding: 5px 5px 5px 0; background: #fff}
+.nolan_table {
+	border-bottom: 1px solid #dedfde;
+}
+.nolan_table td.nolan_drag_handle {
+	background-image: url(../gfx/drag_handle.png) !important;
+	background-repeat: no-repeat !important;
+	background-position: 50% 10% !important;
+	padding: 5px 12px !important;
+	background-color: #fff;
+	border-right: 5px solid #ecedec;
+	border-left: 1px solid #dedfde;
+}
+.nolan_table .ui-sortable-helper {
+	display: block;
+	-webkit-box-shadow:  2px 2px 3px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+	box-shadow:  0 0 5px rgba(0, 0, 0, 0.4);
+	border-top: 1px solid #fff;
+	opacity: 0.85;
+}
+.nolan_table td.nolan_drag_handle:hover {
+	cursor: move;
+	cursor: -webkit-grab;
+}
+.nolan_table a.add_row, .nolan_table a.remove_row {
+	display: block;
+	width: 16px;
+	height: 16px;
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	display: inline-block;
+}
+.nolan_table a.add_row {
+	background: url(../gfx/plus.png);
+	margin-right: 5px;
+}
+.nolan_table a.remove_row {
+	background: url(../gfx/minus.png);
+}
+.nolan_table tr td.nolan_nav {
+	white-space: nowrap;
+	text-align: center;
+	line-height: 16px;
+	padding: 5px 5px 0 5px;
+	border-right: 1px solid #dedfde;
+}
+.nolan_table tr td {
+	vertical-align: top;
+	border-top: 1px solid #dedfde !important;
+}
+.nolan_table tr td.nolan_content_col {
+	background: #ecedec;
+}
+.nolan_table {
+	width: 100%;
+}
+.nolan_table input {
+	padding-left: 0;
+	padding-right: 0;
+}
+.nolan_table input, .nolan_table input:focus, .nolan_table textarea, .nolan_table textarea:focus {
+	border: 1px solid #dedfde;
+	padding: 6px 3px;
+	margin: 0;
+	font-size: 11px;
+	font-family: 'Lucida Grande', sans-serif;
+	background: #fff;
+}
+.nolan_table textarea {
+	height: 68px;
+}
+.nolan_table tr td {
+	border: none;
+	padding: 5px 5px 5px 0;
+	background: #fff
+}
 .nolan_table .nolan_checkbox {
 	text-align: center;
-	padding: 5px 5px 5px 0; background: #fff;
+	padding: 5px 5px 5px 0;
+	background: #fff;
 	border: 1px solid #dedfde;
 }
 .nolan_table input[type=checkbox] {
 	margin: 0 auto;
 }
+.nolan_table tr td.nolan_nav {
+}
+.nolan_table tr td.nolan_drag_handle {
+}
+.nolan_table {
+}
+.nolan_table th {
+	padding: 3px 5px;
+}
+.nolan_table tr.ui-sortable-placeholder td {
+	background: #666;
+	background: rgba(0, 0, 0, 0.4);
+	visibility: visible !important
+}
+.grid_cell .nolan_table tr td {
+	padding: 0px;
+}
+#publish table.grid_field_container .nolan_table thead th, .low-vargroup table.grid_field_container .nolan_table thead th {
+	border: none;
+	font-size: 12px;
+	background: #fff;
+	padding: 3px 0 5px 8px;
+}
+#publish table.grid_field .nolan_table tr td.nolan_content_col, .low-vargroup table.grid_field .nolan_table tr td.nolan_content_col {
+	border-right: none;
+}
+#publish table.grid_field .nolan_table td.nolan_nav, .low-vargroup table.grid_field .nolan_table td.nolan_nav {
+	padding: 5px 5px 0 5px;
+}
+#publish table.grid_field .nolan_table td, .low-vargroup table.grid_field .nolan_table td {
+	padding: 5px 5px 5px 0;
+}
+#publish table.grid_field .nolan_table input[type=text], .low-vargroup table.grid_field .nolan_table input[type=text] {
+	padding: 8px !important;
+	border: 1px solid #dedfde;
+}
+#publish table.grid_field .nolan_table input[type=text]:focus, .low-vargroup table.grid_field .nolan_table input[type=text]:focus {
+	border: 1px solid #dedfde;
+}
+.low-vargroup table.grid_field .nolan_table tr td.nolan_drag_handle {
+	padding: 10px !important;
+}
+.low-vargroup table.grid_field .nolan_table td {
+	padding: 5px !important;
+}
 
-.nolan_table tr td.nolan_nav {}
-.nolan_table tr td.nolan_drag_handle {}
-.nolan_table {}
-.nolan_table th { padding: 3px 5px;}
+.low-vargroup.mainTable .nolan_table .nolan_vertical,
+.nolan_table .nolan_vertical {
+	width: 90%;
+}
 
-.nolan_table tr.ui-sortable-placeholder td {background: #666; background: rgba(0,0,0,0.4); visibility: visible !important}
+.low-vargroup.mainTable .nolan_table td.nolan_drag_handle.nolan_vertical_drag_handle,
+.nolan_table td.nolan_drag_handle.nolan_vertical_drag_handle {
+	border-right-width: 1px !important;
+	width: 20px;
+}
 
+.low-vargroup.mainTable .nolan_table td.nolan_nav.nolan_vertical_nav,
+.nolan_table td.nolan_nav.nolan_vertical_nav {
+	padding-top: 15px;
+	border-left: 1px solid #dedfde !important;
+	width: 30px;
+}
 
+.low-vargroup.mainTable .nolan_table .nolan_vertical th,
+.nolan_table .nolan_vertical th {
+	width: 33.333%;
+	text-align: right;
+	background: #fff !important;
+	border: none !important;
+}
 
-.grid_cell .nolan_table tr td {padding: 0px;}
-#publish table.grid_field_container .nolan_table thead th,
-.low-vargroup table.grid_field_container .nolan_table thead th {border: none; font-size: 12px; background: #fff; padding: 3px 0 5px 8px;}
-#publish table.grid_field .nolan_table tr td.nolan_content_col,
-.low-vargroup table.grid_field .nolan_table tr td.nolan_content_col {border-right: none;}
-#publish table.grid_field .nolan_table td.nolan_nav,
-.low-vargroup table.grid_field .nolan_table td.nolan_nav {padding: 5px 5px 0 5px;}
-#publish table.grid_field .nolan_table td,
-.low-vargroup table.grid_field .nolan_table td {  padding: 5px 5px 5px 0;}
-#publish table.grid_field .nolan_table input[type=text],
-.low-vargroup table.grid_field .nolan_table input[type=text] {padding: 8px !important; border: 1px solid #dedfde;}
-#publish table.grid_field .nolan_table input[type=text]:focus,
-.low-vargroup table.grid_field .nolan_table input[type=text]:focus { border: 1px solid #dedfde;}
+.low-vargroup.mainTable .nolan_table .nolan_vertical th {
+	color: #5F6C74; font-weight: bold;
+}
+.low-vargroup.mainTable .matrix .nolan_table td,
+.low-vargroup.mainTable .matrix .nolan_table  th {
+	background: #fff;
+}
 
-.low-vargroup table.grid_field .nolan_table tr td.nolan_drag_handle {padding: 10px !important;}
-.low-vargroup table.grid_field .nolan_table td {  padding: 5px !important;}
+.low-vargroup.mainTable .nolan_table .nolan_vertical td,
+.nolan_table .nolan_vertical td {
+	width: 66.666%;
+	padding: 5px;
+	background: #fff !important;
+	border: none !important;
+}

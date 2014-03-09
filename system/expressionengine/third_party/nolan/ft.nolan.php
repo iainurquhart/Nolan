@@ -16,11 +16,25 @@
 
 // ------------------------------------------------------------------------
 
+
+/**
+ * < EE 2.6.0
+ */
+if ( ! function_exists('ee'))
+{
+	function ee()
+	{
+		static $EE;
+		if ( ! $EE) $EE = get_instance();
+		return $EE;
+	}
+}
+
 class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.3.1'
+		'version' => '2.4'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -37,11 +51,11 @@ class Nolan_ft extends EE_Fieldtype
 	{
 		parent::__construct();
 		
-		$this->site_id 		= $this->EE->config->item('site_id');
-		$this->asset_path	= defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES . '/nolan_assets' : $this->EE->config->item('theme_folder_url') . '/third_party/nolan_assets';
+		$this->site_id 		= ee()->config->item('site_id');
+		$this->asset_path	= defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES . '/nolan_assets' : ee()->config->item('theme_folder_url') . '/third_party/nolan_assets';
 		$this->drag_handle  = '&nbsp;';
 		$this->nolan_nav 	= '<a class="remove_row" href="#">-</a> <a class="add_row" href="#">+</a>';
-		$this->nolan_cache 	   =& $this->EE->session->cache['nolan_ft_data'];
+		$this->nolan_cache 	   =& ee()->session->cache['nolan_ft_data'];
 	}
 	
 	
@@ -108,19 +122,25 @@ class Nolan_ft extends EE_Fieldtype
 	 */
 	public function grid_display_settings($data)
 	{
-		$this->EE->lang->loadfile('nolan');
+		ee()->lang->loadfile('nolan');
 		$nolan_col_labels = (isset($data['nolan_col_labels'])) ? $data['nolan_col_labels'] : '';
 		$nolan_col_names  = (isset($data['nolan_col_names']))  ? $data['nolan_col_names']  : '';
 		$nolan_col_types = (isset($data['nolan_col_types'])) ? $data['nolan_col_types'] : '';
 		$nolan_max_rows  = (isset($data['nolan_max_rows']))  ? $data['nolan_max_rows']  : '';
+		$nolan_layout  = (isset($data['nolan_layout']))  ? $data['nolan_layout']  : 'horizontal';
 
-		
+		$nolan_layout_options = array(
+          'horizontal'  => lang('nolan_horizontal'),
+          'vertical'  => lang('nolan_vertical'),
+        );
+
 
 		return array(
 			EE_Fieldtype::grid_settings_row(lang('nolan_col_labels'), form_input('nolan_col_labels', $nolan_col_labels), FALSE),
 			EE_Fieldtype::grid_settings_row(lang('nolan_col_names'), form_input('nolan_col_names', $nolan_col_names), FALSE),
 			EE_Fieldtype::grid_settings_row(lang('nolan_col_types'), form_input('nolan_col_types', $nolan_col_types), FALSE),
-			EE_Fieldtype::grid_settings_row(lang('nolan_max_rows'), form_input('nolan_max_rows', $nolan_max_rows), FALSE)
+			EE_Fieldtype::grid_settings_row(lang('nolan_max_rows'), form_input('nolan_max_rows', $nolan_max_rows), FALSE),
+			EE_Fieldtype::grid_settings_row(lang('nolan_layout'), form_dropdown('nolan_layout', $nolan_layout_options, $nolan_layout), FALSE)
 		);
 	}
 	
@@ -137,7 +157,7 @@ class Nolan_ft extends EE_Fieldtype
 	{
 		
 		$this->_add_nolan_assets();
-		$this->EE->load->library('table');
+		ee()->load->library('table');
 		$vars = array();
 		
 		$vars['col_labels'] = $this->get_col_attributes('nolan_col_labels');
@@ -145,6 +165,8 @@ class Nolan_ft extends EE_Fieldtype
 		$vars['col_types']  = $this->get_col_attributes('nolan_col_types');
 		$vars['max_rows']	= (isset($this->settings['nolan_max_rows'])) ? $this->settings['nolan_max_rows'] : '';
 		$vars['col_width'] = 100 / count($vars['col_labels']).'%';
+
+		$layout = (isset($this->settings['nolan_layout']) && $this->settings['nolan_layout'] == 'vertical') ? 'vertical' : 'horizontal';
 
 		if($data != '' && !is_array($data))
 		{
@@ -176,7 +198,7 @@ class Nolan_ft extends EE_Fieldtype
 		if(is_array($data))  $vars['row_data'] = $this->process_array($vars['col_names'], $data);
 
 
-		return $this->EE->load->view('cell', $vars, TRUE);
+		return ee()->load->view('cell_'.$layout, $vars, TRUE);
 	}
 	
 	
@@ -301,8 +323,8 @@ class Nolan_ft extends EE_Fieldtype
 			$count_vars['total_nolan_cols'] = count($cols);
 			$count_vars['total_nolan_rows'] = count($data);
 			
-			$tagdata = $this->EE->functions->var_swap($tagdata, $count_vars);
-			$tagdata = $this->EE->functions->prep_conditionals($tagdata, $count_vars);
+			$tagdata = ee()->functions->var_swap($tagdata, $count_vars);
+			$tagdata = ee()->functions->prep_conditionals($tagdata, $count_vars);
 
 			if( $offset ) $data = array_slice($data, $offset);
 			if( $limit )  $data = array_slice($data, 0, $limit);
@@ -326,7 +348,7 @@ class Nolan_ft extends EE_Fieldtype
 				}
 			}
 
-			$r = $this->EE->TMPL->parse_variables($tagdata, $data);
+			$r = ee()->TMPL->parse_variables($tagdata, $data);
 
 			if( $backspace )  $r = substr($r, 0, - $backspace);
 
@@ -353,31 +375,41 @@ class Nolan_ft extends EE_Fieldtype
 	public function display_settings($data)
 	{
 
-		$this->EE->lang->loadfile('nolan');
+		ee()->lang->loadfile('nolan');
 
 		if (! isset($data['nolan_col_labels'])) $data['nolan_col_labels'] = '';
 		if (! isset($data['nolan_col_names'])) $data['nolan_col_names'] = '';
 		if (! isset($data['nolan_col_types'])) $data['nolan_col_types'] = '';
 		if (! isset($data['nolan_max_rows'])) $data['nolan_max_rows'] = '';
+		if (! isset($data['nolan_layout'])) $data['nolan_layout'] = 'horizontal';
 
+		$nolan_layout_options = array(
+          'horizontal'  => lang('nolan_horizontal'),
+          'vertical'  => lang('nolan_vertical'),
+        );
 
-		$this->EE->table->add_row(
+		ee()->table->add_row(
 			lang('nolan_col_labels'),
 			 form_input('nolan_col_labels', $data['nolan_col_labels'])		
 		);
 
-		$this->EE->table->add_row(
+		ee()->table->add_row(
 			lang('nolan_col_names'),
 			 form_input('nolan_col_names', $data['nolan_col_names'])		
 		);
-		$this->EE->table->add_row(
+		ee()->table->add_row(
 			lang('nolan_col_types'),
 			 form_input('nolan_col_types', $data['nolan_col_types'])		
 		);
 
-		$this->EE->table->add_row(
+		ee()->table->add_row(
 			lang('nolan_max_rows'),
 			 form_input('nolan_max_rows', $data['nolan_max_rows'])		
+		);
+
+		ee()->table->add_row(
+			lang('nolan_layout'),
+			 form_dropdown('nolan_layout', $nolan_layout_options, $data['nolan_layout'])		
 		);
 			
 	}
@@ -396,18 +428,25 @@ class Nolan_ft extends EE_Fieldtype
 	public function display_cell_settings($data)
 	{
 	
-		$this->EE->lang->loadfile('nolan');
+		ee()->lang->loadfile('nolan');
 	
 		if (! isset($data['nolan_col_labels'])) $data['nolan_col_labels'] = '';
 		if (! isset($data['nolan_col_names'])) $data['nolan_col_names'] = '';
 		if (! isset($data['nolan_col_types'])) $data['nolan_col_types'] = '';
 		if (! isset($data['nolan_max_rows'])) $data['nolan_max_rows'] = '';
+		if (! isset($data['nolan_layout'])) $data['nolan_layout'] = '';
+
+		$nolan_layout_options = array(
+          'horizontal'  => lang('nolan_horizontal'),
+          'vertical'  => lang('nolan_vertical'),
+        );
 		
 		return array(
 			array(lang('nolan_col_labels'), form_input('nolan_col_labels', $data['nolan_col_labels'], 'class="matrix-textarea"')),
 			array(lang('nolan_col_names'), form_input('nolan_col_names', $data['nolan_col_names'], 'class="matrix-textarea"')),
 			array(lang('nolan_col_types'), form_input('nolan_col_types', $data['nolan_col_types'], 'class="matrix-textarea"')),
-			array(lang('nolan_max_rows'), form_input('nolan_max_rows', $data['nolan_max_rows'], 'class="matrix-textarea"'))
+			array(lang('nolan_max_rows'), form_input('nolan_max_rows', $data['nolan_max_rows'], 'class="matrix-textarea"')),
+			array(lang('nolan_layout'), form_dropdown('nolan_layout', $nolan_layout_options, $data['nolan_layout']))
 		);
 	}
 		
@@ -428,7 +467,8 @@ class Nolan_ft extends EE_Fieldtype
 			'nolan_col_labels' => $data['nolan_col_labels'],
 			'nolan_col_names' => $data['nolan_col_names'],
 			'nolan_col_types' => $data['nolan_col_types'],
-			'nolan_max_rows' => $data['nolan_max_rows']
+			'nolan_max_rows' => $data['nolan_max_rows'],
+			'nolan_layout' => $data['nolan_layout']
 		);
 	}
 
@@ -444,7 +484,7 @@ class Nolan_ft extends EE_Fieldtype
 	    {
 
 	    	// get all our nolan columns
-	        $nolan_cols = $this->EE->db->get_where(
+	        $nolan_cols = ee()->db->get_where(
 	        	'matrix_cols', 
 	        	 array('col_type' => 'nolan')
 	        )->result_array();
@@ -453,7 +493,7 @@ class Nolan_ft extends EE_Fieldtype
 	        foreach($nolan_cols as $col)
 	        {
 
-	        	$nolan_rows = $this->EE->db->get_where(
+	        	$nolan_rows = ee()->db->get_where(
 	        		'matrix_data', 
 	        		 array(
 	        		 	'col_id_'.$col['col_id'].' IS NOT NULL' => NULL
@@ -469,7 +509,7 @@ class Nolan_ft extends EE_Fieldtype
 	        		if(is_array($old_data))
 	        		{
 
-						$this->EE->db->update(
+						ee()->db->update(
 							'matrix_data', 
 							array(
 								'col_id_'.$col['col_id'] => (string) json_encode( $old_data )
@@ -483,7 +523,7 @@ class Nolan_ft extends EE_Fieldtype
 	        	
 	        }
 
-	        $this->EE->db->update(
+	        ee()->db->update(
 				'fieldtypes', 
 				array('has_global_settings' => 'y'), 
 				array('name' => 'nolan')
@@ -512,13 +552,13 @@ class Nolan_ft extends EE_Fieldtype
 		{
 			$this->nolan_cache['assets_added'] = 1;
 			
-			$this->EE->cp->add_to_foot('
-				<link type="text/css" href="'.$this->asset_path.'/css/nolan.css" rel="stylesheet" />
-				<script src="'.$this->asset_path.'/js/jquery.roland.js?v2.2"></script>
-				<script src="'.$this->asset_path.'/js/nolan.js?v2.2"></script>
+			ee()->cp->add_to_foot('
+				<link type="text/css" href="'.$this->asset_path.'/css/nolan.css?v2.4" rel="stylesheet" />
+				<script src="'.$this->asset_path.'/js/jquery.roland.js?v2.4"></script>
+				<script src="'.$this->asset_path.'/js/nolan.js?v2.4"></script>
 			');
 			
-			$this->EE->cp->add_js_script('ui', 'sortable');
+			ee()->cp->add_js_script('ui', 'sortable');
 		}
 	}
 	
