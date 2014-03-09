@@ -4,7 +4,7 @@
 .nolan_table td.nolan_drag_handle {
 	background-image: url(../gfx/drag_handle.png) !important;
 	background-repeat: no-repeat !important;
-	background-position: 50% 10% !important;
+	background-position: 50% 10px !important;
 	padding: 5px 12px !important;
 	background-color: #fff;
 	border-right: 5px solid #ecedec;
@@ -142,7 +142,8 @@
 }
 
 .low-vargroup.mainTable .nolan_table td.nolan_nav.nolan_vertical_nav,
-.nolan_table td.nolan_nav.nolan_vertical_nav {
+.nolan_table td.nolan_nav.nolan_vertical_nav,
+#publish table.grid_field td.nolan_nav.nolan_vertical_nav {
 	padding-top: 15px;
 	border-left: 1px solid #dedfde !important;
 	width: 30px;
