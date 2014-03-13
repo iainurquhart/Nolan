@@ -51,7 +51,6 @@ $(document).ready(function() {
 	}
 	if (typeof Matrix != 'undefined') {
 		Matrix.bind('nolan', 'display', function(cell){
-			console.log(cell);
 		 	setup_nolan(cell, 'matrix')
 		});
 	}
