@@ -135,6 +135,11 @@
 	width: 90%;
 }
 
+.low-vargroup.mainTable .nolan_table td.nolan_drag_handle {
+	border-right: none !important;
+	width: 30px !important;
+}
+
 .low-vargroup.mainTable .nolan_table td.nolan_drag_handle.nolan_vertical_drag_handle,
 .nolan_table td.nolan_drag_handle.nolan_vertical_drag_handle {
 	border-right-width: 1px !important;
@@ -155,6 +160,12 @@
 	text-align: right;
 	background: #fff !important;
 	border: none !important;
+}
+
+.low-vargroup.mainTable .nolan_table th {
+	background:#fff !important;
+	border: none !important;
+	color: #5F6C74 !important;
 }
 
 .low-vargroup.mainTable .nolan_table .nolan_vertical th {

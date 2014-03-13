@@ -5,7 +5,7 @@
 			<?php $i = 0 ?>
 			<?php foreach($col_labels as $label): ?>
 				<th>
-					<?php if(isset($col_types[$i]) && $col_types[$i] != 'checkbox'):?>
+					<?php if((isset($col_types[$i]) && $col_types[$i] != 'checkbox') || !isset($col_types[$i])):?>
 						<?php echo $label; ?>
 					<?php endif; ?>
 				</th>

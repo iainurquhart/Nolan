@@ -10,7 +10,7 @@
 				<?php foreach($row as $cell => $cell_data): ?>
 					<tr>
 							<th scope="row">
-								<?php if(isset($col_labels[$i]) && isset($col_types[$i]) && $col_types[$i] != 'checkbox'):?>
+								<?php if((isset($col_labels[$i]) && isset($col_types[$i]) && $col_types[$i] != 'checkbox') || !isset($col_types[$i])):?>
 								<?php echo $col_labels[$i]; ?>
 								<?php endif ?>
 							</th>

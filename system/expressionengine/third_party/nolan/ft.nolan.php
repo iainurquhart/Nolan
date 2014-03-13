@@ -34,7 +34,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.4'
+		'version' => '2.4.1'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -163,6 +163,7 @@ class Nolan_ft extends EE_Fieldtype
 		$vars['col_labels'] = $this->get_col_attributes('nolan_col_labels');
 		$vars['col_names']  = $this->get_col_attributes('nolan_col_names');
 		$vars['col_types']  = $this->get_col_attributes('nolan_col_types');
+
 		$vars['max_rows']	= (isset($this->settings['nolan_max_rows'])) ? $this->settings['nolan_max_rows'] : '';
 		$vars['col_width'] = 100 / count($vars['col_labels']).'%';
 
