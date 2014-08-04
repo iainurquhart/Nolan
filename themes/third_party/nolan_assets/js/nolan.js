@@ -37,6 +37,22 @@ $(document).ready(function() {
 		});
 	
 		container.addClass('roland-on-the-ropes');
+
+		$.ee_filebrowser.add_trigger('.nolan_thumbnail_trigger', ".nolan_thumbnail_trigger", {content_type: "all"}, function(file, field) { 
+		
+			dir_id 	= file["upload_location_id"];
+	    	thumb 	= file["thumb"];
+	    	file_name = file["file_name"];
+
+	        $(this).closest("td").find(".nolan_filename_holder input").val("{filedir_" + dir_id + "}" + file_name);
+	        if(file.is_image) {
+	       	 $(this).closest("td").find(".nolan_thumb_holder").html("<img src=\'" + thumb + "\' />");
+	       	}else {
+	       		$(this).closest("td").find(".nolan_thumb_holder").html(file_name);
+	       	}
+
+
+		});
 		
 	}
 
@@ -56,21 +72,7 @@ $(document).ready(function() {
 	}
 
 
-	$.ee_filebrowser.add_trigger('.nolan_thumbnail_trigger', ".nolan_thumbnail_trigger", {content_type: "all"}, function(file, field) { 
-		
-		dir_id 	= file["upload_location_id"];
-    	thumb 	= file["thumb"];
-    	file_name = file["file_name"];
 
-        $(this).closest("td").find(".nolan_filename_holder input").val("{filedir_" + dir_id + "}" + file_name);
-        if(file.is_image) {
-       	 $(this).closest("td").find(".nolan_thumb_holder").html("<img src=\'" + thumb + "\' />");
-       	}else {
-       		$(this).closest("td").find(".nolan_thumb_holder").html(file_name);
-       	}
-
-
-	});
 
 	
 
