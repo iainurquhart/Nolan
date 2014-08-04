@@ -183,3 +183,23 @@
 	background: #fff !important;
 	border: none !important;
 }
+
+.nolan_table .nolan_file_col {
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px;
+}
+
+.nolan_table .nolan_thumbnail_trigger {
+	margin: 0 auto;
+	display: inline-block;
+}
+
+.nolan_table .nolan_thumb_holder {
+	padding: 0 0 0 0;
+}
+
+
+
+
+

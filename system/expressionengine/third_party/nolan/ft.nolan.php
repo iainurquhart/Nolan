@@ -34,7 +34,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.4.1'
+		'version' => '2.5'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -158,6 +158,7 @@ class Nolan_ft extends EE_Fieldtype
 		
 		$this->_add_nolan_assets();
 		ee()->load->library('table');
+
 		$vars = array();
 		
 		$vars['col_labels'] = $this->get_col_attributes('nolan_col_labels');
@@ -596,16 +597,25 @@ class Nolan_ft extends EE_Fieldtype
 	{
 
 	    $final = array();
+
+	    ee()->load->library('typography');
+		ee()->typography->parse_images = TRUE;
 	
 	    foreach($arrays as $a)
 	    {
 	        $next = array();
 	        foreach($keys as $k)
 	        {
+	        	if(isset($a[$k]) && (substr( $a[$k], 0, 9 ) === "{filedir_"))
+	        	{
+	        		$a[$k] = ee()->typography->parse_file_paths($a[$k]);
+	        	}
 	            $next[$k] = isset($a[$k]) ? $a[$k] : '';
 	        }
 	        $final[] = $next;
 	    }
+
+	   
 
 
 	
