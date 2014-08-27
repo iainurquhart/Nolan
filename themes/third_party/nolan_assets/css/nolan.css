@@ -197,6 +197,18 @@
 
 .nolan_table .nolan_thumb_holder {
 	padding: 0 0 0 0;
+	margin: 0 auto;
+	width: auto;
+	position: relative;
+}
+
+.nolan_table .nolan_thumbnail_trigger {
+	clear: both; !important;
+	display: block;
+}
+
+.nolan_table  .remove_file {
+	position: absolute; top: 0; right: 47%;
 }
 
 

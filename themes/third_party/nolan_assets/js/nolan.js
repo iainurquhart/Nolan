@@ -48,7 +48,7 @@ $(document).ready(function() {
 	        if(file.is_image) {
 	       	 $(this).closest("td").find(".nolan_thumb_holder").html("<img src=\'" + thumb + "\' />");
 	       	}else {
-	       		$(this).closest("td").find(".nolan_thumb_holder").html(file_name);
+	       		$(this).closest("td").find(".nolan_thumb_holder").html('<img src="'+EE.PATH_CP_GBL_IMG+'default.png" alt="'+EE.PATH_CP_GBL_IMG+'default.png" width="40" /><br />' + file_name);
 	       	}
 
 

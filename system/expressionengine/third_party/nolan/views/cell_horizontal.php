@@ -25,14 +25,14 @@
 					<td class="nolan_content_col" width="<?=$col_width?>">
 						<?php 
 
-							$data = array(
+							$textarea_data = array(
 				              'name'        => $cell_name.'['.$cell.']['.$key.']',
 				              'value'       => html_entity_decode($cell_data),
 				              'cols'        => '10',
 				              'rows'        => '5'
 				            );
 
-							echo form_textarea($data); 
+							echo form_textarea($textarea_data); 
 						?>
 					<?php elseif(isset($col_types[$i]) && $col_types[$i] == 'checkbox'):?>
 					<td class="nolan_content_col" width="<?=$col_width?>">
@@ -47,12 +47,17 @@
 						<td class="nolan_content_col nolan_file_col" width="<?=$col_width?>">
 							<div class="nolan_thumb_holder">
 								<?php if($cell_data != ''): ?>
-									<img src="<?=$cell_data?>" width="73" />
+									<?php if(isset($files[ $data[$key][$cell] ]['width']) && $files[ $data[$key][$cell] ]['width'] != ''):?>
+										<img src="<?=$cell_data?>" width="73" />
+									<?php else: ?>
+										<img src="<?=PATH_CP_GBL_IMG?>default.png"  width="40"><br />
+										<?=$files[ $data[$key][$cell] ]['file_name']?>
+									<?php endif ?>
 								<?php endif ?>
 							</div>
 							<a href="#" class="nolan_thumbnail_trigger">Add File</a>
 							<div class="nolan_filename_holder" style="display:none;">
-							<?php echo form_hidden($cell_name.'['.$cell.']['.$key.']', $cell_data); ?>
+							<?php echo form_hidden($cell_name.'['.$cell.']['.$key.']', $data[$key][$cell]); ?>
 							</div>
 
 					<?php else: ?>
@@ -76,14 +81,14 @@
 							<td class="nolan_content_col" width="<?=$col_width?>">
 							<?php 
 							
-								$data = array(
+								$textarea_data = array(
 					              'name'        => $cell_name.'['.$col_name.'][0]',
 					              'value'       => '',
 					              'cols'        => '5',
 					              'rows'        => '5'
 					            );
 
-								echo form_textarea($data); 
+								echo form_textarea($textarea_data); 
 							?>
 						<?php elseif(isset($col_types[$i]) && $col_types[$i] == 'checkbox'):?>
 							<td class="nolan_content_col" width="<?=$col_width?>">
