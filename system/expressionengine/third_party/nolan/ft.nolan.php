@@ -34,7 +34,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.4.1'
+		'version' => '2.5'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -158,6 +158,7 @@ class Nolan_ft extends EE_Fieldtype
 		
 		$this->_add_nolan_assets();
 		ee()->load->library('table');
+
 		$vars = array();
 		
 		$vars['col_labels'] = $this->get_col_attributes('nolan_col_labels');
@@ -189,6 +190,9 @@ class Nolan_ft extends EE_Fieldtype
 			$data = $new_data;
 			
 		}
+
+		$vars['data'] = $data;
+
 		
 		$vars['row_data']    = array();
 		$vars['cell_name']   = (isset($this->cell_name)) ? $this->cell_name : $this->field_name;
@@ -196,8 +200,9 @@ class Nolan_ft extends EE_Fieldtype
 		$vars['nav'] 		 = $this->nolan_nav;
 		$vars['type'] = $type;
 
-		if(is_array($data))  $vars['row_data'] = $this->process_array($vars['col_names'], $data);
+		if(is_array($data))  $vars['row_data'] = $this->process_array($vars['col_names'], $data, TRUE);
 
+		$vars['files'] = (isset($this->nolan_cache['files'])) ? $this->nolan_cache['files'] : '';
 
 		return ee()->load->view('cell_'.$layout, $vars, TRUE);
 	}
@@ -333,9 +338,18 @@ class Nolan_ft extends EE_Fieldtype
 			if( ! $data ) return ''; // offset and limit might have nulled our data array
 
 			$i = 1;
+
+			ee()->load->library('typography');
+			ee()->typography->parse_images = TRUE;
 			
 			foreach($data as $key => &$item)
 			{
+				
+				foreach($item as &$row)
+				{
+					$row = ee()->typography->parse_file_paths($row);
+				}
+
 				$item['nolan_row_count'] = $i++;
 
 				// make sure vars are defined for each column in
@@ -592,20 +606,43 @@ class Nolan_ft extends EE_Fieldtype
 	 * @param	mixed $data
 	 * @return	void
 	 */
-	private function process_array($keys, $arrays)
+	private function process_array($keys, $arrays, $parse_file_paths = FALSE)
 	{
 
 	    $final = array();
-	
+
+	    if($parse_file_paths == TRUE)
+	    {
+	    	ee()->load->library('typography');
+			ee()->typography->parse_images = TRUE;
+	    }
+	    
+	    if(REQ == 'CP')
+	    {
+	    	ee()->load->library('file_field');
+	    }
+
 	    foreach($arrays as $a)
 	    {
 	        $next = array();
 	        foreach($keys as $k)
 	        {
+	        	if(isset($a[$k]) && (substr( $a[$k], 0, 9 ) === "{filedir_") && $parse_file_paths)
+	        	{
+
+	        		if(REQ == 'CP')
+				    {
+				     	$this->nolan_cache['files'][$a[$k]] = ee()->file_field->parse_field($a[$k]);
+				    }
+
+	        		$a[$k] = ee()->typography->parse_file_paths($a[$k]);
+	        	}
 	            $next[$k] = isset($a[$k]) ? $a[$k] : '';
 	        }
 	        $final[] = $next;
 	    }
+
+	   
 
 
 	
@@ -644,7 +681,7 @@ class Nolan_ft extends EE_Fieldtype
 		
 		return $col_attributes;
 	}
-	
+
 	
 
 }

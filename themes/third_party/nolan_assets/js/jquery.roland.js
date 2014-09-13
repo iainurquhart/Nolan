@@ -41,11 +41,13 @@
             case 'password':
             case 'search':
             case 'text':
+            case 'hidden':
               $(this).val('');
               break;
           }
         });
 
+        $cloneRow.find('.nolan_thumb_holder').html('');
         $cloneRow.find('select, textarea').val('');
 
         // Pre-add event. Only checks return value from last listener.
