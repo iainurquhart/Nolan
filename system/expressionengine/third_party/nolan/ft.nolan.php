@@ -34,7 +34,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.5'
+		'version' => '2.5.1'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -566,6 +566,9 @@ class Nolan_ft extends EE_Fieldtype
 		if (! isset($this->nolan_cache['assets_added']) )
 		{
 			$this->nolan_cache['assets_added'] = 1;
+
+			ee()->load->library('file_field');
+        	ee()->file_field->browser();
 			
 			ee()->cp->add_to_foot('
 				<link type="text/css" href="'.$this->asset_path.'/css/nolan.css?v2.4" rel="stylesheet" />
