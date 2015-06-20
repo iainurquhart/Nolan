@@ -34,7 +34,7 @@ class Nolan_ft extends EE_Fieldtype
 {
 	public $info = array(
 		'name' => 'Nolan',
-		'version' => '2.5.1'
+		'version' => '2.5.2'
 	);
 	
 	var $has_array_data = TRUE;	
@@ -73,7 +73,7 @@ class Nolan_ft extends EE_Fieldtype
 
 	public function accepts_content_type($name)
 	{
-		return ($name == 'channel' || $name == 'grid');
+		return ($name == 'channel' || $name == 'grid' || $name == 'blocks/1');
 	}
 
 	// --------------------------------------------------------------------
