@@ -9,6 +9,33 @@ $(document).ready(function() {
 		var col_count = ui.children().size();
 		return ui;
 	}
+
+	// instantiate wygwam where applicable
+	function setup_wygwam(container) {
+		container.find('textarea.nolan_wygwam').each(function() {
+			new Wygwam($(this));
+		});
+	}
+
+	// remove stale wygwam editor elements
+	function clean_wygwam(container) {
+		container.find('textarea.nolan_wygwam')
+			.css('visiblity', null)
+			.show()
+			.next() // ck editor div
+			.remove();
+	}
+
+	// callback when new row is added
+	function setup_post_add_row_callback(row_button) {
+		row_button.on('postAddRow', function(event, data) {
+			clean_wygwam(data.newRow);
+			setup_wygwam(data.newRow);
+
+			// add this callback to new row's add button
+			setup_post_add_row_callback(data.newRow.find(data.options.addRowClass));
+		});
+	}
 	
 	function setup_nolan(cell, type) {
 
@@ -22,6 +49,10 @@ $(document).ready(function() {
 		}
 
 		opts = $.extend({}, $.fn.roland.defaults);
+
+		setup_post_add_row_callback(container.find('.' + opts.addRowClass));
+
+		setup_wygwam(container);
 
 		container.sortable({
 			helper: fixHelper, // fix widths

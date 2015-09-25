@@ -191,6 +191,44 @@ class Nolan_ft extends EE_Fieldtype
 			
 		}
 
+		// is Wygwam installed?
+		if (file_exists(PATH_THIRD.'wygwam/helper.php'))
+		{
+			// add wygwam configs to view variables
+			$vars['wygwam_configs'] = array();
+
+			$has_wygwam = FALSE;
+
+			// loop through col types to look for wygwam fields
+			foreach ($vars['col_types'] as $i => $col_type)
+			{
+				if (strncmp($col_type, 'wygwam:', 7) === 0)
+				{
+					$vars['col_types'][$i] = 'wygwam';
+					$vars['wygwam_configs'][$i] = substr($col_type, 7);
+				}
+			}
+
+			// load Wygwam if necessary
+			if (in_array('wygwam', $vars['col_types']))
+			{
+				// load up the Wygwam helper
+				if ( ! class_exists('Wygwam_helper'))
+				{
+					require_once PATH_THIRD.'wygwam/config.php';
+					require_once PATH_THIRD.'wygwam/helper.php';
+				}
+
+				// include Wygwam css/js
+				Wygwam_helper::include_field_resources();
+
+				foreach ($vars['wygwam_configs'] as $config)
+				{
+					Wygwam_helper::insert_config_js(compact('config'));
+				}
+			}
+		}
+
 		$vars['data'] = $data;
 
 		
