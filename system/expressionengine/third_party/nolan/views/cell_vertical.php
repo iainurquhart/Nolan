@@ -15,13 +15,15 @@
 								<?php endif ?>
 							</th>
 				
-					<?php if(isset($col_types[$i]) && $col_types[$i] == 'textarea'):?>
+					<?php if(isset($col_types[$i]) && ($col_types[$i] == 'textarea' || $col_types[$i] == 'wygwam')):?>
 					<td class="nolan_content_col" width="<?=$col_width?>">
 						<?php 
 
 							$textarea_data = array(
 				              'name'        => $cell_name.'['.$cell.']['.$key.']',
 				              'value'       => html_entity_decode($cell_data),
+				              'class'       => 'nolan_'.$col_types[$i],
+				              'data-config' => isset($wygwam_configs[$i]) ? $wygwam_configs[$i] : NULL,
 				              'cols'        => '10',
 				              'rows'        => '5'
 				            );
@@ -81,13 +83,15 @@
 								<?php endif ?>
 							</th>
 						
-						<?php if(isset($col_types[$i]) && $col_types[$i] == 'textarea'):?>
+						<?php if(isset($col_types[$i]) && ($col_types[$i] == 'textarea' || $col_types[$i] == 'wygwam')):?>
 							<td class="nolan_content_col" width="<?=$col_width?>">
 							<?php 
 							
 								$textarea_data = array(
 					              'name'        => $cell_name.'['.$col_name.'][0]',
 					              'value'       => '',
+					              'class'       => 'nolan_'.$col_types[$i],
+					              'data-config' => isset($wygwam_configs[$i]) ? $wygwam_configs[$i] : NULL,
 					              'cols'        => '5',
 					              'rows'        => '5'
 					            );
