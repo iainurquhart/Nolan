@@ -76,6 +76,75 @@ The add-on is not officially supported but send requests/bug reports/pull reques
 
 Hat tip to Stephen Lewis [@monooso](http://twitter.com/monooso) of Experience Internet for [Roland.js](https://github.com/experience/jquery.roland.js) which I modified with permission for Nolan.
 
+### Hooks
+
+#### `nolan_pre_parse`
+
+Alter the field data before rendering the custom field tag pair in an `{exp:channel:entries}` tag.
+
+```
+if (ee()->extensions->active_hook('nolan_pre_parse'))
+{
+	// map of col short name => col type
+	$col_types = array_combine(
+		$this->get_col_attributes('nolan_col_names'),
+		$this->get_col_attributes('nolan_col_types')
+	);
+
+	$data = ee()->extensions->call('nolan_pre_parse', $data, $tagdata, $this->settings, $col_types);
+}
+
+$r = ee()->TMPL->parse_variables($tagdata, $data);
+```
+
+Example:
+
+```
+public function nolan_pre_parse($data, $tagdata, $settings, $col_types)
+{
+    if (ee()->extensions->last_call !== FALSE)
+    {
+        $data = ee()->extensions->last_call;
+    }
+
+    foreach ($data as $i => $row)
+    {
+        foreach ($row as $key => $value)
+        {
+            if (isset($col_types[$key]) && $col_types[$key] === 'contact_email')
+            {
+                $data[$i][$key] = '<a href="mailto:'.$value.'">Contact</a>';
+            }
+        }
+    }
+
+    return $data;
+}
+```
+
+#### `nolan_custom_col_type_XXX`
+
+Render a custom col type.
+
+```
+return ee()->extensions->call('nolan_custom_col_type_'.$type, $field_name, $cell_data, $vars);
+```
+
+Example:
+
+```
+public function nolan_custom_col_type_email($field_name, $cell_data, $vars)
+{
+    return form_input(array(
+        'type' => 'email',
+        'name' => $field_name,
+        'value' => $cell_data,
+        'class' => 'email',
+        'placeholder' => 'Enter a valid email',
+    ));
+}
+```
+
 * * *
 
 Copyright (c) 2012 Iain Urquhart
