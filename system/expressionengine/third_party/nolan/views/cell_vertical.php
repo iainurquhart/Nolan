@@ -54,6 +54,9 @@
 							<div class="nolan_filename_holder" style="display:none;">
 							<?php echo form_hidden($cell_name.'['.$cell.']['.$key.']', $data[$key][$cell]); ?>
 							</div>
+					<?php elseif(isset($col_types[$i]) && $ft->has_custom_col_type($col_types[$i])):?>
+					<td class="nolan_content_col nolan_<?php echo $col_types[$i]; ?>_col" width="<?=$col_width?>">
+						<?php echo $ft->render_custom_col_type($col_types[$i], $cell_name.'['.$cell.']['.$key.']', $cell_data, ee()->load->_ci_cached_vars); ?>
 					<?php else: ?>
 					<td class="nolan_content_col" width="<?=$col_width?>">
 						<?php echo form_input($cell_name.'['.$cell.']['.$key.']', $cell_data) ?></td>
@@ -114,6 +117,9 @@
 								<div class="nolan_filename_holder" style="display:none;">
 								<?php echo form_hidden($cell_name.'['.$col_name.'][0]', ''); ?>
 								</div>
+						<?php elseif(isset($col_types[$i]) && $ft->has_custom_col_type($col_types[$i])):?>
+						<td class="nolan_content_col nolan_<?php echo $col_types[$i]; ?>_col" width="<?=$col_width?>">
+							<?php echo $ft->render_custom_col_type($col_types[$i], $cell_name.'['.$col_name.'][0]', '', ee()->load->_ci_cached_vars); ?>
 						<?php else: ?>
 							<td class="nolan_content_col" width="<?=$col_width?>">
 							<?php echo form_input($cell_name.'['.$col_name.'][0]', '') ?></td>

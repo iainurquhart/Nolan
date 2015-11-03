@@ -244,6 +244,33 @@ class Nolan_ft extends EE_Fieldtype
 
 		return ee()->load->view('cell_'.$layout, $vars, TRUE);
 	}
+
+	/**
+	 * Check whether the specified custom col type has been registered
+	 * @param  string  $type the name of the custom type
+	 * @return boolean
+	 */
+	public function has_custom_col_type($type)
+	{
+		return ee()->extensions->active_hook('nolan_custom_col_type_'.$type);
+	}
+
+	/**
+	 * Render a custom col type form input
+	 * @param  string $type       the name of the custom type
+	 * @param  string $field_name the name of form input
+	 * @param  string $cell_data  the saved data which corresponds to the specified column
+	 * @param  array  $vars       the view vars from display_cell method
+	 * @return string             the rendered field HTML
+	 */
+	public function render_custom_col_type($type, $field_name, $cell_data, $vars)
+	{
+		/**
+		 * nolan_custom_col_type_XXX Hook
+		 * Allows custom rendering a custom col type form input
+		 */
+		return ee()->extensions->call('nolan_custom_col_type_'.$type, $field_name, $cell_data, $vars);
+	}
 	
 	
 	// --------------------------------------------------------------------
@@ -400,6 +427,22 @@ class Nolan_ft extends EE_Fieldtype
 					}
 				}
 			}
+
+			/**
+			 * nolan_pre_parse hook
+			 * Alter the field data before parsing the custom field tag pair
+			 */
+			if (ee()->extensions->active_hook('nolan_pre_parse'))
+			{
+				// map of col short name => col type
+				$col_types = array_combine(
+					$this->get_col_attributes('nolan_col_names'),
+					$this->get_col_attributes('nolan_col_types')
+				);
+
+				$data = ee()->extensions->call('nolan_pre_parse', $data, $tagdata, $this->settings, $col_types);
+			}
+
 
 			$r = ee()->TMPL->parse_variables($tagdata, $data);
 
