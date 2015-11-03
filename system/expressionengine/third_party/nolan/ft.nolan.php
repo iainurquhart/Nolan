@@ -242,6 +242,8 @@ class Nolan_ft extends EE_Fieldtype
 
 		$vars['files'] = (isset($this->nolan_cache['files'])) ? $this->nolan_cache['files'] : '';
 
+		$vars['ft'] = $this;
+
 		return ee()->load->view('cell_'.$layout, $vars, TRUE);
 	}
 
