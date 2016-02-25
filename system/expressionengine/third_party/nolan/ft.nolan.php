@@ -108,7 +108,7 @@ class Nolan_ft extends EE_Fieldtype
 
 	public function grid_display_field($data)
 	{
-	   return $this->display_cell($data);
+	   return $this->display_cell($data, 'grid');
 	}
 
 	// --------------------------------------------------------------------
@@ -173,7 +173,10 @@ class Nolan_ft extends EE_Fieldtype
 		if($data != '' && !is_array($data))
 		{
 			// matrix is converting json quotes to entities...
-			$data = html_entity_decode($data, ENT_QUOTES, 'UTF-8');
+			if ($type === 'cell' || $type === 'field')
+			{
+				$data = html_entity_decode($data, ENT_QUOTES, 'UTF-8');
+			}
 			
 			$data = json_decode($data, TRUE);
 		}
